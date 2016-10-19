@@ -19,10 +19,11 @@ public class TheInternetExampleTests extends BaseTest {
     @Test
     public void formAuthenticationSuccess() {
 
-        // Navigate to the form authentication page
-        FormAuthenticationPage formAuthenticationPage = WelcomePage
-                .open().then()
-                .clickFormAuthenticationLink();
+        // Navigate to the heroku site's welcome page
+        WelcomePage welcomePage = WelcomePage.open();
+
+        // Click the form authentication link
+        FormAuthenticationPage formAuthenticationPage = welcomePage.clickFormAuthenticationLink();
 
         // Log in with the username password provided
         FormAuthenticationSuccessPage successPage = formAuthenticationPage
@@ -35,7 +36,8 @@ public class TheInternetExampleTests extends BaseTest {
 
 
     //Test 2 - Form Authentication Failure
-    //Navigate to the form auth page
-    //Log in with an incorrect password (but a valid username)
-    //Confirm that 'Your password is invalid!' is displayed
+    // Navigate to the heroku site's welcome page
+    // Click the form authentication link
+    // Log in with an incorrect password (but a valid username)
+    // Confirm that 'Your password is invalid!' is displayed
 }
