@@ -1,15 +1,16 @@
 dist: trusty
+sudo: required
 
 language: java
 jdk: oraclejdk8
 
 addons:
   firefox: "47.0.1"
-  apt:
-    packages:
-      - chromium-browser
-      - libappindicator1
-      - fonts-liberation
+  #apt:
+  #  packages:
+  #    - chromium-browser
+  #    - libappindicator1
+  #    - fonts-liberation
 
 # disable default mvn install
 install: true
@@ -27,7 +28,7 @@ env:
     - SELENIUM_VER=$SELENIUM_MAJ_VER.1
     # set PATH to include firefox as the firefox-addon doesn't seem to work
     - PATH="/tmp/firefox:/tmp/chromedriver:$PATH"
-    - CHROME_BIN=chromium-browser
+    # - CHROME_BIN=chromium-browser
 
 before_script:
   # setup X11 display
@@ -37,8 +38,15 @@ before_script:
   # Extract Firefox as the firefox-addon doesn't seem to work
   - tar -xjf /tmp/firefox*.tar.bz2 --directory /tmp
 
+  # setting up chrome based on http://blog.500tech.com/setting-up-travis-ci-to-run-tests-on-latest-google-chrome-version/
+  - export CHROME_BIN=/usr/bin/google-chrome
+  - sudo apt-get update
+  - sudo apt-get install -y libappindicator1 fonts-liberation
+  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  - sudo dpkg -i google-chrome*.deb
+
   # set up chrome driver
-  - wget http://chromedriver.storage.googleapis.com/2.21/chromedriver_linux64.zip --quiet
+  - wget http://chromedriver.storage.googleapis.com/2.25/chromedriver_linux64.zip --quiet
   - unzip chromedriver_linux64.zip -d /tmp/
   - chmod +x /tmp/chromedriver
 
@@ -53,10 +61,10 @@ script:
   # install
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -U -q
 
-  # Run on Firefox on the grid
-  - mvn verify -B -Dthreads=$THREAD_COUNT -Dconfig=FirefoxGrid.yaml -DcaptureURL=$CAPTURE_URL -DsutName="$SUT_NAME" -DsutVersion="$SUT_VERSION"
   # Run on chrome on the grid
   - mvn verify -B -Dthreads=$THREAD_COUNT -Dbrowser=chrome -DgridURL=http://localhost:4444/wd/hub -DcaptureURL=$CAPTURE_URL -DsutName="$SUT_NAME" -DsutVersion="$SUT_VERSION"
+  # Run on Firefox on the grid
+  - mvn verify -B -Dthreads=$THREAD_COUNT -Dconfig=FirefoxGrid.yaml -DcaptureURL=$CAPTURE_URL -DsutName="$SUT_NAME" -DsutVersion="$SUT_VERSION"
   # Run and log to Jira
   - mvn verify -B -Dthreads=$THREAD_COUNT -Dconfig=FirefoxGrid.yaml -DjiraURL="http://52.29.130.45:8080" -DjqlQuery="issueKey=TEST-1" -DresultVersion="BUILD TEST VERSION" -DzapiCycleRegex="Test Cycle" -DjiraUsername=frameworkium -DjiraPassword=frameworkium
   # Run on sauce
