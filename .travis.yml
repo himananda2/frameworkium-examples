@@ -36,7 +36,7 @@ before_script:
   - export CHROME_BIN=/usr/bin/google-chrome
   - sudo apt-get update
   # install latest JDK8 (required for some bug fixes)
-  - sudo apt-get install -y libappindicator1 fonts-liberation oracle-java8-installer
+  - sudo apt-get install -y libappindicator1 fonts-liberation openjdk-8-jdk
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   - sudo dpkg -i google-chrome*.deb
 
