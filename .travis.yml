@@ -6,11 +6,6 @@ jdk: oraclejdk8
 
 addons:
   firefox: "47.0.1"
-  #apt:
-  #  packages:
-  #    - chromium-browser
-  #    - libappindicator1
-  #    - fonts-liberation
 
 # disable default mvn install
 install: true
@@ -28,7 +23,6 @@ env:
     - SELENIUM_VER=$SELENIUM_MAJ_VER.1
     # set PATH to include firefox as the firefox-addon doesn't seem to work
     - PATH="/tmp/firefox:/tmp/chromedriver:$PATH"
-    # - CHROME_BIN=chromium-browser
 
 before_script:
   # setup X11 display
@@ -41,17 +35,18 @@ before_script:
   # setting up chrome based on http://blog.500tech.com/setting-up-travis-ci-to-run-tests-on-latest-google-chrome-version/
   - export CHROME_BIN=/usr/bin/google-chrome
   - sudo apt-get update
-  - sudo apt-get install -y libappindicator1 fonts-liberation
+  # install latest JDK8 (required for some bug fixes)
+  - sudo apt-get install -y libappindicator1 fonts-liberation oracle-java8-installer
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   - sudo dpkg -i google-chrome*.deb
 
   # set up chrome driver
-  - wget http://chromedriver.storage.googleapis.com/2.25/chromedriver_linux64.zip --quiet
+  - wget http://chromedriver.storage.googleapis.com/2.25/chromedriver_linux64.zip
   - unzip chromedriver_linux64.zip -d /tmp/
   - chmod +x /tmp/chromedriver
 
   # Download and setup Grid
-  - wget --no-check-certificate https://selenium-release.storage.googleapis.com/$SELENIUM_MAJ_VER/selenium-server-standalone-$SELENIUM_VER.jar --quiet
+  - wget --no-check-certificate https://selenium-release.storage.googleapis.com/$SELENIUM_MAJ_VER/selenium-server-standalone-$SELENIUM_VER.jar
   - java -jar selenium-server-standalone-$SELENIUM_VER.jar -role hub > /dev/null 2>&1 &
   - sleep 2
   - java -jar selenium-server-standalone-$SELENIUM_VER.jar -role node -hub http://localhost:4444/grid/register -browser browserName=firefox,maxInstances=$THREAD_COUNT -maxSession $THREAD_COUNT -port 5555 > /dev/null 2>&1 &
