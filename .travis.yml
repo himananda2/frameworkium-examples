@@ -46,7 +46,7 @@ before_script:
   - java -jar selenium-server-standalone-$SELENIUM_VER.jar -role hub > /dev/null 2>&1 &
   - sleep 2
   - java -jar selenium-server-standalone-$SELENIUM_VER.jar -role node -hub http://localhost:4444/grid/register -browser browserName=firefox,maxInstances=$THREAD_COUNT -maxSession $THREAD_COUNT -port 5555 > /dev/null 2>&1 &
-  - java -jar selenium-server-standalone-$SELENIUM_VER.jar -role node -hub http://localhost:4444/grid/register -browser browserName=chrome,maxInstances=$THREAD_COUNT  -maxSession $THREAD_COUNT -port 5556 > /dev/null 2>&1 &
+  - java -jar selenium-server-standalone-$SELENIUM_VER.jar -role node -hub http://localhost:4444/grid/register -browser browserName=chrome,maxInstances=$THREAD_COUNT  -maxSession $THREAD_COUNT -port 5556 -Dwebdriver.chrome.driver=/tmp/chromedriver > /dev/null 2>&1 &
 
 script:
   # install
