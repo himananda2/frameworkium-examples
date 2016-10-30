@@ -35,8 +35,8 @@ public class DeveloperGuidePage extends BasePage<DeveloperGuidePage> {
     }
 
     public String getGuideTitle() {
-        //Wait for the heading to actually populate with text (even if empty)
-        wait.until(ExpectedConditions.textToBePresentInElement(guideTitle,""));
+        // Wait for the heading to actually populate with text (even if empty)
+        wait.until(ExpectedConditions.textToBePresentInElement(guideTitle, ""));
         return guideTitle.getText();
     }
 

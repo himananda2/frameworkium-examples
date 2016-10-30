@@ -24,7 +24,7 @@ public class ExecutionService extends BaseCaptureService {
                 .as(ExecutionID.class);
     }
 
-    @Step("Get Capture Executions, page={0}, pageSize={1}")
+    @Step("Get Capture Executions: page={0}, pageSize={1}")
     public ExecutionResults getExecutions(int page, int pageSize) {
         return request(
                 ImmutableMap.of("page", page, "pageSize", pageSize),

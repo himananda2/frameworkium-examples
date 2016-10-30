@@ -1,6 +1,7 @@
 package com.tfl.api.test;
 
 import com.frameworkium.core.api.tests.BaseTest;
+import com.frameworkium.core.common.retry.RetryFlakyTest;
 import com.tfl.api.dto.carparkoccupancy.CarParkOccupancies;
 import com.tfl.api.dto.carparkoccupancy.CarParkOccupancy;
 import com.tfl.api.service.carparks.CarParkOccupancyService;
@@ -61,7 +62,7 @@ public class CarParksTest extends BaseTest {
                 .getNumFreeSpaces();
 
         // Make sure things are sane
-        assertThat(freeSpaces).isAtLeast(1);
+        assertThat(freeSpaces).isAtLeast(0);
         assertThat(freeSpaces).isLessThan(10000);
     }
 
