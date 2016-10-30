@@ -35,8 +35,11 @@ before_script:
   # setting up chrome based on http://blog.500tech.com/setting-up-travis-ci-to-run-tests-on-latest-google-chrome-version/
   - export CHROME_BIN=/usr/bin/google-chrome
   - sudo apt-get update
-  # install latest JDK8 (required for some bug fixes)
-  - sudo apt-get install -y libappindicator1 fonts-liberation openjdk-8-jdk
+  # install latest oracle JDK8 (required >u101 for "letsencrypt" root certs)
+  - echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
+  - echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
+  - sudo apt-get install -y libappindicator1 fonts-liberation oracle-java8-installer
+  # install google chrome
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   - sudo dpkg -i google-chrome*.deb
 
