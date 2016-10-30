@@ -8,7 +8,8 @@ addons:
   apt:
     packages:
       - chromium-browser
-      - chromium-chromedriver
+      - libappindicator1
+      - fonts-liberation
 
 # disable default mvn install
 install: true
