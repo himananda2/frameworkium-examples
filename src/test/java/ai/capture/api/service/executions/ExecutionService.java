@@ -18,7 +18,6 @@ public class ExecutionService extends BaseCaptureService {
                 .body(createMessage)
                 .post(CaptureEndpoint.EXECUTIONS.getUrl())
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_CREATED)
                 .extract()
                 .as(ExecutionID.class);
