@@ -38,6 +38,7 @@ before_script:
   # install latest oracle JDK8 (required >u101 for "letsencrypt" root certs)
   - sudo rm /etc/profile.d/jdk.sh # to prevent installer asking to override
   - sudo apt-get install -y libappindicator1 fonts-liberation oracle-java8-installer
+  - sudo apt install oracle-java8-set-default
   # install google chrome
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   - sudo dpkg -i google-chrome*.deb
