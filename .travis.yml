@@ -36,9 +36,8 @@ before_script:
   - export CHROME_BIN=/usr/bin/google-chrome
   - sudo apt-get update
   # install latest oracle JDK8 (required >u101 for "letsencrypt" root certs)
-  - echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
-  - echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
-  - sudo apt-get install -y libappindicator1 fonts-liberation oracle-java8-installer
+  # using yes to deal with any user prompts from the oracle installer
+  - yes > sudo apt-get install -y libappindicator1 fonts-liberation oracle-java8-installer
   # install google chrome
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   - sudo dpkg -i google-chrome*.deb
